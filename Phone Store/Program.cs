@@ -1,3 +1,5 @@
+using Application.Repositories.ProductRepo;
+using AutoMapper;
 using Core.Context;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,7 +15,11 @@ builder.Services.AddDbContext<MyContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+//Register Repusitories:
+builder.Services.AddScoped<IPhone, Phone>();
 
+//Register AutoMapper:
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
 
