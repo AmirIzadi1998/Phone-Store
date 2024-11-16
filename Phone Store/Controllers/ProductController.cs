@@ -23,7 +23,7 @@ namespace Phone_Store.Controllers
 
         #region GetAll
 
-        [HttpGet]
+        [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {
             var product = await _phone.GetAll();

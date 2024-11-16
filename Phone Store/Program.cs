@@ -1,10 +1,18 @@
+using Application.CQRS.PhoneProductCQRS.Command;
+using Application.Repositories.ProductCQRSRepo;
 using Application.Repositories.ProductRepo;
+using Application.Repositories.UnitOfWorkRepo;
 using AutoMapper;
 using Core.Context;
+using Infrastructure;
+using Infrastructure.Utility;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-
+//configs from appsetting
+builder.Services.AddOptions();
+builder.Services.Configure<Configs>(builder.Configuration.GetSection("Configs"));
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -15,8 +23,17 @@ builder.Services.AddDbContext<MyContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
+//Register Class:
+builder.Services.AddSingleton<EncryptionUtility>();
+
 //Register Repusitories:
 builder.Services.AddScoped<IPhone, Phone>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+//Register MediatR:
+builder.Services.AddMediatR(typeof(SaveCommandHandler));
 
 //Register AutoMapper:
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -32,6 +49,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

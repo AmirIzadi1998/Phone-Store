@@ -15,6 +15,7 @@ namespace Core.Context
 
         }
         public DbSet<PhoneProduct> Products { get; set; }
+        public DbSet<User> Users { get; set; }
 
     }
 }
