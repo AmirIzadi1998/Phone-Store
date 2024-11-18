@@ -1,6 +1,7 @@
 ﻿using Application.Repositories.ProductRepo;
 using Core.Context;
 using Infrastructure.Dto;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,7 @@ namespace Phone_Store.Controllers
 {
     [Route("api/Product")]
     [ApiController]
+    [Authorize]
     public class ProductController : ControllerBase
     {
         private readonly IPhone _phone;

@@ -8,6 +8,7 @@ using Infrastructure;
 using Infrastructure.Utility;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Phone_Store;
 
 var builder = WebApplication.CreateBuilder(args);
 //configs from appsetting
@@ -18,11 +19,14 @@ builder.Services.Configure<Configs>(builder.Configuration.GetSection("Configs"))
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+//builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<MyContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
+builder.Services.AddSwagger();
+builder.Services.AddJWT();
 
 //Register Class:
 builder.Services.AddSingleton<EncryptionUtility>();

@@ -32,6 +32,10 @@ namespace Infrastructure.Utility
         {
             return Guid.NewGuid().ToString();
         }
+        public string GetRefreshToken()
+        {
+            return Guid.NewGuid().ToString();
+        }
 
         public string GetNewToken(Guid userId)
         {

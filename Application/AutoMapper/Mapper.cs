@@ -1,4 +1,5 @@
-﻿using Application.CQRS.PhoneProductCQRS.Query;
+﻿using Application.CQRS.NotificationsCQRS;
+using Application.CQRS.PhoneProductCQRS.Query;
 using AutoMapper;
 using Infrastructure.Dto;
 using Infrastructure.Entities;
@@ -11,6 +12,7 @@ namespace Application.AutoMapper
         {
             CreateMap<PhoneDto , PhoneProduct>().ReverseMap();
             CreateMap<PhoneProduct, GetQueryResponse>().ReverseMap();
+            CreateMap<AddRefreshTokenNotification, UserRefreshToken>().ReverseMap();
         }
     }
 }

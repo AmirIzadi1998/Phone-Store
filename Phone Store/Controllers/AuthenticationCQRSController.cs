@@ -6,13 +6,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Phone_Store.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/AuthenticationCQRSController")]
     [ApiController]
-    public class AuthenticationController : ControllerBase
+    public class AuthenticationCQRSController : ControllerBase
     {
         private readonly IMediator _mediator;
 
-        public AuthenticationController(IMediator mediator)
+        public AuthenticationCQRSController(IMediator mediator)
         {
             _mediator = mediator;
         }
@@ -27,6 +27,13 @@ namespace Phone_Store.Controllers
         public async Task<IActionResult> Register(RegisterCommand registerCommand)
         {
             var register = await _mediator.Send(registerCommand);
+            return Ok(register);
+
+        }
+        [HttpPost("GenerateToken")]
+        public async Task<IActionResult> Generate(GenerateNewTokenCommand generateNewTokenCommand)
+        {
+            var register = await _mediator.Send(generateNewTokenCommand);
             return Ok(register);
 
         }

@@ -3,6 +3,7 @@ using Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 
 namespace Phone_Store
 {
@@ -34,6 +35,52 @@ namespace Phone_Store
                     };
                 });
 
+            return services;
+        }
+        public static IServiceCollection AddSwagger(this IServiceCollection services)
+        {
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "App Phone Store",
+                    Description = "App Phone Store",
+                    //TermsOfService = new Uri("https://devtube.ir/"),
+                    //License = new OpenApiLicense
+                    //{
+                    //    Name = "DevTube",
+                    //    Url = new Uri("https://devtube.ir/"),
+                    //}
+                });
+
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Reference = new OpenApiReference
+                    {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = "Bearer"
+                    },
+                    Scheme = "Bearer",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                });
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        new string[] { }
+                    }
+                });
+
+            });
             return services;
         }
     }
