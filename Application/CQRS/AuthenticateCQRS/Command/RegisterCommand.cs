@@ -7,6 +7,7 @@ using Core.Context;
 using Infrastructure.Entities;
 using Infrastructure.Utility;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.CQRS.AuthenticateCQRS.Command
 {
@@ -28,22 +29,28 @@ namespace Application.CQRS.AuthenticateCQRS.Command
         }
         public async Task<Unit> Handle(RegisterCommand request, CancellationToken cancellationToken)
         {
-            var salt = _encryptionUtility.GetNewSalt();
-            var hashpassword = _encryptionUtility.GetSHA256(request.Password, salt);
-
-            var user = new User()
+            var test = await _context.Users.SingleOrDefaultAsync(x => x.UserName == request.UserName);
+            if (test == null)
             {
-                Id = Guid.NewGuid(),
-                UserName = request.UserName,
-                Password = hashpassword,
-                PasswordSalt = salt,
-                RegisterDate = DateTime.Now
-            };
+                var salt = _encryptionUtility.GetNewSalt();
+                var hashpassword = _encryptionUtility.GetSHA256(request.Password, salt);
 
-            await _context.Users.AddAsync(user);
-            await _context.SaveChangesAsync();
+                var user = new User()
+                {
+                    Id = Guid.NewGuid(),
+                    UserName = request.UserName,
+                    Password = hashpassword,
+                    PasswordSalt = salt,
+                    RegisterDate = DateTime.Now
+                };
 
-            return Unit.Value;
+                await _context.Users.AddAsync(user);
+                await _context.SaveChangesAsync();
+
+                return Unit.Value;
+            }
+
+            throw new Exception("Your username is duplicate");
 
         }
     }

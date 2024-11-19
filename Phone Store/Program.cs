@@ -2,6 +2,7 @@ using Application.CQRS.PhoneProductCQRS.Command;
 using Application.Repositories.ProductCQRSRepo;
 using Application.Repositories.ProductRepo;
 using Application.Repositories.UnitOfWorkRepo;
+using Application.Repositories.UserRepo;
 using AutoMapper;
 using Core.Context;
 using Infrastructure;
@@ -35,6 +36,7 @@ builder.Services.AddSingleton<EncryptionUtility>();
 builder.Services.AddScoped<IPhone, Phone>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IUserRepo, UserRepo>();
 
 //Register MediatR:
 builder.Services.AddMediatR(typeof(SaveCommandHandler));

@@ -13,6 +13,8 @@ namespace Application.AutoMapper
             CreateMap<PhoneDto , PhoneProduct>().ReverseMap();
             CreateMap<PhoneProduct, GetQueryResponse>().ReverseMap();
             CreateMap<AddRefreshTokenNotification, UserRefreshToken>().ReverseMap();
+            CreateMap<User, UserDto>().ReverseMap();
+            CreateMap<UserRefreshToken, UserRefreshTokenDto>().ReverseMap();
         }
     }
 }

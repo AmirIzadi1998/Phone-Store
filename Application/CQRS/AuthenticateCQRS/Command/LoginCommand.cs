@@ -23,7 +23,7 @@ namespace Application.CQRS.AuthenticateCQRS.Command
     public class LoginCommandResponse
     {
         public string UserName { get; set; }
-        public string Tokes { get; set; }
+        public string Token { get; set; }
         public string RefreshToken { get; set; }
         public int ExpireTime { get; set; }
     }
@@ -65,7 +65,7 @@ namespace Application.CQRS.AuthenticateCQRS.Command
             var response = new LoginCommandResponse()
             {
                 UserName = user.UserName,
-                Tokes = token,
+                Token = token,
                 RefreshToken = refreshtoken,
                 
             };
