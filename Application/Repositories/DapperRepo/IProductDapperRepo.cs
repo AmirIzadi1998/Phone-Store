@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 using Infrastructure.Dto;
 using Infrastructure.Entities;
 
-namespace Application.Repositories.ProductRepo
+namespace Application.Repositories.DapperRepo
 {
-    public interface IPhone
+    public interface IProductDapperRepo
     {
         Task<List<PhoneProduct>> GetAll();
         Task<PhoneProduct> GetById(int id);
         Task<PhoneProduct> GetByName(string name);
-        Task<PhoneProduct> Insert(PhoneDto phoneDto);
+        Task<string> Insert(PhoneDto phoneDto);
         Task<PhoneProduct> Update(PhoneDto phoneDto);
-        Task<PhoneProduct> DeleteById(int id);
+        Task<PhoneProduct> Delete(int id);
     }
 }

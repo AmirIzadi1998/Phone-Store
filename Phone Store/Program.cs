@@ -1,5 +1,6 @@
 using Application.CQRS.PhoneProductCQRS.Command;
 using Application.Repositories.ProductCQRSRepo;
+using Application.Repositories.DapperRepo;
 using Application.Repositories.ProductRepo;
 using Application.Repositories.UnitOfWorkRepo;
 using Application.Repositories.UserRepo;
@@ -31,12 +32,15 @@ builder.Services.AddJWT();
 
 //Register Class:
 builder.Services.AddSingleton<EncryptionUtility>();
+builder.Services.AddSingleton<NewConnectionUtility>();
+builder.Services.AddSingleton<QueryUtility>();
 
 //Register Repusitories:
 builder.Services.AddScoped<IPhone, Phone>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IUserRepo, UserRepo>();
+builder.Services.AddScoped<IProductDapperRepo, ProductDapperRepo>();
 
 //Register MediatR:
 builder.Services.AddMediatR(typeof(SaveCommandHandler));

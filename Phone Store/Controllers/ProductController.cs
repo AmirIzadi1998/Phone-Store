@@ -10,7 +10,7 @@ namespace Phone_Store.Controllers
 {
     [Route("api/Product")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class ProductController : ControllerBase
     {
         private readonly IPhone _phone;

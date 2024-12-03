@@ -92,30 +92,29 @@ namespace Application.Repositories.UserRepo
             return response;
         }
 
-        public async Task<string> Generate(string RefreshToken, Guid UserId, int RefreshTokenTimeOut)
+        public async Task Generate(string RefreshToken, Guid UserId, int RefreshTokenTimeOut)
         {
-            var resolt = new UserRefreshTokenDto()
+            var result = new UserRefreshTokenDto()
             {
                 RefreshToken = RefreshToken,
                 RefreshTokenTimeOut = RefreshTokenTimeOut,
                 UserId = UserId
             };
 
-            var check = await _context.UserRefreshTokens.SingleOrDefaultAsync(x => x.UserId == resolt.UserId);
+            var check = await _context.UserRefreshTokens.SingleOrDefaultAsync(x => x.UserId == result.UserId);
             if (check == null)
             {
-                await _context.AddAsync(resolt);
+                await _context.AddAsync(result);
             }
             else
             {
-                check.RefreshToken = resolt.RefreshToken;
-                check.RefreshTokenTimeOut = resolt.RefreshTokenTimeOut;
+                check.RefreshToken = result.RefreshToken;
+                check.RefreshTokenTimeOut = result.RefreshTokenTimeOut;
                 check.CreateDate = DateTime.Now;
                 check.Isvalid = true;
             }
 
             await _context.SaveChangesAsync();
-            return "*****";
         }
 
         public async Task<RefreshTokenDto> GenerateNewToken(string Token, string RefreshToken)

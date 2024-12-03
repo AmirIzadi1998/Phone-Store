@@ -15,6 +15,6 @@ namespace Infrastructure.Dto
         public bool PhoneIsGlobal { get; set; }
         public string PhoneBattery { get; set; }
         public string PhoneChip { get; set; }
-        public bool IsExisting { get; set; }
+        public bool IsExisting { get; set; } = true;
     }
 }

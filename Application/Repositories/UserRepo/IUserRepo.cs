@@ -12,7 +12,7 @@ namespace Application.Repositories.UserRepo
     {
         Task<RefreshTokenDto> Login(string UserName, string Password);
         Task<string> Register(string UserName, string Password);
-        Task<string> Generate(string RefreshToken, Guid UserId, int RefreshTokenTimeOut);
+        Task Generate(string RefreshToken, Guid UserId, int RefreshTokenTimeOut);
         Task<RefreshTokenDto> GenerateNewToken(string Token, string RefreshToken);
     }
 }

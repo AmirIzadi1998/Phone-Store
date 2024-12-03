@@ -7,8 +7,11 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using Core.Context;
+using Dapper;
 using Infrastructure.Entities;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Mapper = Application.AutoMapper.Mapper;
 
 namespace Application.Repositories.ProductRepo
@@ -17,20 +20,25 @@ namespace Application.Repositories.ProductRepo
     {
         private readonly IMapper _mapper;
         private readonly MyContext _context;
+        private readonly IConfiguration _config;
 
-        public Phone(IMapper mapper, MyContext context)
+        public Phone(IMapper mapper, MyContext context, IConfiguration config)
         {
             _mapper = mapper;
             _context = context;
+            _config = config;
         }
 
-        public async Task<IEnumerable<PhoneProduct>> GetAll()
+        public async Task<List<PhoneProduct>> GetAll()
         {
-            var product = await _context.Products.ToListAsync();
-            if (product == null) throw new Exception("No data available in (GetAll)");
-            var phone = _mapper.Map<IEnumerable<PhoneDto>>(product);
-
-            return product;
+            var connectionstring = _config.GetConnectionString("DefaultConnection");
+            var query = @"select * from products";
+            if (query == null) throw new Exception("No data available in (GetAll)");
+            using (var connection = new SqlConnection(connectionstring))
+            {
+                var result = await connection.QueryAsync<PhoneProduct>(query);
+                return result.ToList();
+            }
         }
 
         public async Task<PhoneProduct> GetById(int id)
