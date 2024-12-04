@@ -11,12 +11,12 @@ using MediatR;
 
 namespace Application.CQRS.PhoneProductCQRS.Query
 {
-    public class GetQuery : IRequest<GetQueryResponse>
+    public class GetByName : IRequest<GetByNameResponse>
     {
-        public int Id { get; set; }
+        public string name { get; set; }
     }
 
-    public class GetQueryResponse
+    public class GetByNameResponse
     {
         public int Id { get; set; }
         public string PhoneName { get; set; }
@@ -28,22 +28,22 @@ namespace Application.CQRS.PhoneProductCQRS.Query
         public bool IsExisting { get; set; }
     }
 
-    public class GetQueryHandler : IRequestHandler<GetQuery, GetQueryResponse>
+    public class GetByNameHandler : IRequestHandler<GetByName, GetByNameResponse>
     {
         private readonly IProductRepository _product;
         private readonly IMapper _mapper;
 
-        public GetQueryHandler(IProductRepository product, IMapper mapper)
+        public GetByNameHandler(IProductRepository product, IMapper mapper)
         {
             _product = product;
             _mapper = mapper;
         }
 
-        public async Task<GetQueryResponse> Handle(GetQuery request, CancellationToken cancellationToken)
+        public async Task<GetByNameResponse> Handle(GetByName request, CancellationToken cancellationToken)
         {
-            var product = await _product.GetById(request.Id);
+            var product = await _product.GetByName(request.name);
             if (product == null) throw new Exception();
-            var response = _mapper.Map<GetQueryResponse>(product);
+            var response = _mapper.Map<GetByNameResponse>(product);
             return response;
         }
     }

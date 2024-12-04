@@ -9,8 +9,11 @@ namespace Application.Repositories.ProductCQRSRepo
 {
     public interface IProductRepository
     {
-        Task<IEnumerable<PhoneProduct>> GetAll();
+        Task<List<PhoneProduct>> GetAll();
         Task<PhoneProduct> GetById(int id);
+        Task<PhoneProduct> GetByName(string name);
+        Task<PhoneProduct> Delete(int id);
+        Task<PhoneProduct> Update(int id);
         Task<int> Insert(PhoneProduct phoneProduct);
     }
 }

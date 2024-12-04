@@ -17,7 +17,13 @@ namespace Application.Repositories.ProductCQRSRepo
         {
             _context = context;
         }
-        public async Task<IEnumerable<PhoneProduct>> GetAll()
+
+        public async Task<PhoneProduct> Delete(int id)
+        {
+            return await _context.Products.SingleOrDefaultAsync(x => x.Id == id);
+        }
+
+        public async Task<List<PhoneProduct>> GetAll()
         {
             return await _context.Products.ToListAsync();
         }
@@ -27,11 +33,21 @@ namespace Application.Repositories.ProductCQRSRepo
             return await _context.Products.FindAsync(id);
         }
 
+        public async Task<PhoneProduct> GetByName(string name)
+        {
+            return await _context.Products.FirstOrDefaultAsync(x => x.PhoneName == name);
+        }
+
         public async Task<int> Insert(PhoneProduct phoneProduct)
         {
             await _context.Products.AddAsync(phoneProduct);
             await _context.SaveChangesAsync();
             return phoneProduct.Id;
+        }
+
+        public async Task<PhoneProduct> Update(int id)
+        {
+            return await _context.Products.FirstOrDefaultAsync(x => x.Id == id);
         }
     }
 }

@@ -31,21 +31,17 @@ namespace Application.Repositories.ProductRepo
 
         public async Task<List<PhoneProduct>> GetAll()
         {
-            var connectionstring = _config.GetConnectionString("DefaultConnection");
-            var query = @"select * from products";
-            if (query == null) throw new Exception("No data available in (GetAll)");
-            using (var connection = new SqlConnection(connectionstring))
-            {
-                var result = await connection.QueryAsync<PhoneProduct>(query);
-                return result.ToList();
-            }
+            var product = await _context.Products.ToListAsync();
+            if (product == null) throw new Exception();
+            var phone = _mapper.Map<List<PhoneProduct>>(product);
+            return product;
         }
 
         public async Task<PhoneProduct> GetById(int id)
         {
 
             var product = await _context.Products.FindAsync(id);
-            if (product == null) throw new Exception("No data available in (GetById)");
+            if (product == null) throw new Exception();
             var phone = _mapper.Map<PhoneDto>(product);
 
             return product;
@@ -54,7 +50,7 @@ namespace Application.Repositories.ProductRepo
         public async Task<PhoneProduct> GetByName(string name)
         {
             var product = await _context.Products.FirstOrDefaultAsync(x => x.PhoneName == name);
-            if (product == null) throw new Exception("No data available in (GetByName)");
+            if (product == null) throw new Exception();
             var phone = _mapper.Map<PhoneDto>(product);
 
             return product;
@@ -63,7 +59,7 @@ namespace Application.Repositories.ProductRepo
         public async Task<PhoneProduct> Insert(PhoneDto phoneDto)
         {
             var product = _mapper.Map<PhoneProduct>(phoneDto);
-            if (product == null) throw new Exception("No data available in (Insert)");
+            if (product == null) throw new Exception();
             await _context.Products.AddAsync(product);
             await _context.SaveChangesAsync();
             phoneDto.Id = product.Id;
@@ -75,7 +71,7 @@ namespace Application.Repositories.ProductRepo
         {
             
             var result = await _context.Products.FirstOrDefaultAsync(x => x.Id == phoneDto.Id);
-            if (result == null) throw new Exception("This id Not available");
+            if (result == null) throw new Exception();
            var mapper = _mapper.Map(phoneDto, result);
             await _context.SaveChangesAsync();
 
@@ -85,7 +81,7 @@ namespace Application.Repositories.ProductRepo
         public async Task<PhoneProduct> DeleteById(int id)
         {
             var product = await _context.Products.FirstOrDefaultAsync(x => x.Id == id);
-            if (product == null) throw new Exception("This id Not available");
+            if (product == null) throw new Exception();
             _context.Products.Remove(product);
             await _context.SaveChangesAsync();
 
