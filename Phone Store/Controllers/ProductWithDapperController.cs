@@ -3,6 +3,7 @@ using Application.Repositories.DapperRepo;
 using Core.Context;
 using Infrastructure.Dto;
 using Infrastructure.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,6 +11,7 @@ namespace Phone_Store.Controllers
 {
     [Route("api/ProductWithDapper")]
     [ApiController]
+    [Authorize]
     public class ProductWithDapperController : ControllerBase
     {
         private readonly IProductDapperRepo _dapperRepo;

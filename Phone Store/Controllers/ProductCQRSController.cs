@@ -2,6 +2,7 @@
 using Application.CQRS.PhoneProductCQRS.Query;
 using Core.Context;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +10,7 @@ namespace Phone_Store.Controllers
 {
     [Route("api/ProductCQRS")]
     [ApiController]
+    [Authorize]
     public class ProductCQRSController : ControllerBase
     {
         private readonly IMediator _mediator;
