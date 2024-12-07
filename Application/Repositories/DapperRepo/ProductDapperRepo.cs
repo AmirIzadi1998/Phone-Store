@@ -38,7 +38,7 @@ namespace Application.Repositories.DapperRepo
         #region Delete
         public async Task<PhoneProduct> Delete(int id)
         {
-            if (id == null) throw new Exception("Please inter your Id for Delete");
+            if (id == null) throw new Exception();
             var query = _query.GetQueryDelete();
             using (var connection = _queryUtility.GetConfiguration())
             {
@@ -51,7 +51,7 @@ namespace Application.Repositories.DapperRepo
         public async Task<List<PhoneProduct>> GetAll()
         {
             var query = _query.GetQueryGetAll();
-            if (query == null) throw new Exception("No data available in (GetAll)");
+            if (query == null) throw new Exception();
             using (var connection = _queryUtility.GetConfiguration())
             {
                 var result = await connection.QueryAsync<PhoneProduct>(query);
@@ -63,7 +63,7 @@ namespace Application.Repositories.DapperRepo
         #region GetById
         public async Task<PhoneProduct> GetById(int id)
         {
-            if (id == null) throw new Exception("please your ID Inter");
+            if (id == null) throw new Exception();
 
             var query = _query.GetQueryById();
             using (var connection = _queryUtility.GetConfiguration())
@@ -77,7 +77,7 @@ namespace Application.Repositories.DapperRepo
         #region GetByName
         public async Task<PhoneProduct> GetByName(string name)
         {
-            if (name == null) throw new Exception("Please Inter");
+            if (name == null) throw new Exception();
             var query = _query.GetQueryByName();
             using (var connection = _queryUtility.GetConfiguration())
             {
@@ -89,7 +89,7 @@ namespace Application.Repositories.DapperRepo
         #region Insert
         public async Task<string> Insert(PhoneDto phoneDto)
         {
-            if (phoneDto == null) throw new Exception("Please Inter your values");
+            if (phoneDto == null) throw new Exception();
             var query = _query.GetQueryInsert();
             using (var connection = _queryUtility.GetConfiguration())
             {
@@ -102,7 +102,7 @@ namespace Application.Repositories.DapperRepo
         #region Update
         public async Task<PhoneProduct> Update(PhoneDto phoneDto)
         {
-            if (phoneDto == null) throw new Exception("Please enter your values");
+            if (phoneDto == null) throw new Exception();
             var query = _query.GetQueryUpdate();
             using (var connection = _queryUtility.GetConfiguration())
             {
